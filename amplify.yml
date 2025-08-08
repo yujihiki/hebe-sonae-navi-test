@@ -1,10 +1,12 @@
 version: 1
 backend:
   phases:
+    preBuild:
+      commands: []
     build:
-      commands:
-        - '# Execute AmplifyCi - DO NOT REMOVE'
-        - npx AmplifyCi --npm
+      commands: []
+    postBuild:
+      commands: []
 frontend:
   phases:
     preBuild:
