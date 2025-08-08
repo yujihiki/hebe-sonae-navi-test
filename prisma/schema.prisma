@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model DiagnosisResult {
+  id                          Int      @id @default(autoincrement())
+  diagnosisDatetime           DateTime @default(now())
+  hnMemberId                  String   @default("")
+  relationship                String?  @default("")
+  familyInfo                  Json     @default("{}")
+  petDogCount                 Int?     @default(0)
+  petCatCount                 Int?     @default(0)
+  petOtherCount               Int?     @default(0)
+  allergy                     Boolean  @default(false)
+  care                        Boolean  @default(false)
+  illness                     Boolean  @default(false)
+  disability                  Boolean  @default(false)
+  heatSensitive               Boolean  @default(false)
+  coldSensitive               Boolean  @default(false)
+  sweetTooth                  Boolean  @default(false)
+  pickyEater                  Boolean  @default(false)
+  germSensitive               Boolean  @default(false)
+  dislikeInsects              Boolean  @default(false)
+  rollingStock                Boolean  @default(false)
+  hasCar                      Boolean  @default(false)
+  solarPower                  Boolean  @default(false)
+  homeBattery                 Boolean  @default(false)
+  portablePower               Boolean  @default(false)
+  otherPower                  Boolean  @default(false)
+  storageLocationConcern      Boolean  @default(false)
+  furnitureSecuringConcern    Boolean  @default(false)
+  firePreventionConcern       Boolean  @default(false)
+  safetyConfirmationConcern   Boolean  @default(false)
+  typhoonPreparationConcern   Boolean  @default(false)
+  postDisasterActionConcern   Boolean  @default(false)
+  insuranceConcern            Boolean  @default(false)
+  petEvacuationConcern        Boolean  @default(false)
+  adviceResult                Json     @default("[]")
+  suppliesResult              Json     @default("[]")
+  emergencyBagResult          Json     @default("[]")
+}
