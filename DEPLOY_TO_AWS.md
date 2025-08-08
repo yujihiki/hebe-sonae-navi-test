@@ -113,6 +113,28 @@ Amplifyでデプロイする前に、作成したRDSデータベースにテー�
 
 ---
 
+### オプション: AWS Secrets Manager を利用したDB接続情報の管理
+- **シークレットの作成**:  
+  AWS Secrets Managerで `disaster-prep-db-credentials` という名前のシークレットを作成し、PostgreSQLの接続情報（ユーザー名、パスワード、DB名、エンドポイント）を保存します。  
+- **Amplifyサービスロールに権限を追加**:  
+  IAMコンソールでAmplifyのサービスロールに以下のポリシーをアタッチします。  
+  ```json
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": ["secretsmanager:GetSecretValue"],
+        "Resource": "arn:aws:secretsmanager:<リージョン>:<アカウントID>:secret:disaster-prep-db-credentials-*"
+      }
+    ]
+  }
+  ```  
+- **Amplify環境変数の設定**:  
+  Amplifyコンソールで「環境変数を追加」→タイプを「Secrets Manager」に切り替え、キーに `DATABASE_URL` を入力し、作成したシークレットのARNを選択します。  
+- **ビルド・デプロイ**:  
+  この設定によりAmplifyは、ビルド・デプロイ時にSecrets Managerからシークレットを取得し、環境変数としてアプリに渡します。
+
 ## （推奨）本番環境向けのセキュリティ設定
 
 デプロイが成功したら、セキュリティを強化するためにRDSデータベースへのパブリックアクセスを無効にすることを強く推奨します。
